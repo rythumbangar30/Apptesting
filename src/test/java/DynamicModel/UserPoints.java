@@ -19,22 +19,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class UserPoints extends BaseTest{
-
-
-
-
-
     public static Response getUser(String UserUrl){
-
-
-
         Response response=given()
                 .header("Authorization","Bearer "+baseToken)
                 .request(Method.GET, baseURI+UserUrl);
         return response;
-
     }
-
     @Test
     public void testGetUser(){
         String url="public/v2/users/5853415";
@@ -45,8 +35,6 @@ public class UserPoints extends BaseTest{
     }
 
     public static Response createUser(String UserUrl,String payload){
-//        String url= ApplicationProperties.INSTANCE.getBaseURI();
-//        String token=ApplicationProperties.INSTANCE.getToken();
         Response response=given()
                 .header("Authorization","Bearer "+baseToken)
                 .contentType(ContentType.JSON)
@@ -54,7 +42,6 @@ public class UserPoints extends BaseTest{
                 .request(Method.POST,baseURI+UserUrl);
         return response;
     }
-
 
     public int createUser(){
         String url="public/v2/users";
@@ -73,8 +60,6 @@ public class UserPoints extends BaseTest{
     }
 
     public static Response updateUser(String UserUrl,String payload){
-//        String url=ApplicationProperties.INSTANCE.getBaseURI();
-//        String token=ApplicationProperties.INSTANCE.getToken();
         Response response=given()
                 .header("Authorization","Bearer "+baseToken)
                 .contentType(ContentType.JSON)
@@ -82,7 +67,6 @@ public class UserPoints extends BaseTest{
                 .request(Method.PUT,baseURI+UserUrl);
         return response;
     }
-
 
     public int updateUser() {
         int updateID=createUser();
@@ -115,7 +99,5 @@ public class UserPoints extends BaseTest{
         Response response=deleteUser(url);
         System.out.println("Deleted UserID :"+UserId);
         assertThat(204,equalTo(response.statusCode()));
-
     }
-
 }
