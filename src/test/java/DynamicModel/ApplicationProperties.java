@@ -4,7 +4,7 @@ import java.util.Properties;
 
 public enum ApplicationProperties {
     INSTANCE;
-private final Properties properties;
+    private final Properties properties;
 
 
     ApplicationProperties() {
@@ -12,15 +12,17 @@ private final Properties properties;
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
 
     }
-    public String getBaseURI(){
+
+    public String getBaseURI() {
         return properties.getProperty("service.url");
     }
-    public String getToken(){
+
+    public String getToken() {
         return properties.getProperty("service.token");
     }
 

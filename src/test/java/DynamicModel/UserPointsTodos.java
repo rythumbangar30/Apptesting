@@ -7,32 +7,32 @@ import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
 import static DynamicModel.BaseTest.baseToken;
-import static io.restassured.RestAssured.baseURI;
+import static DynamicModel.BaseTest.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class UserPointsComments extends BaseTest{
-
-    public static Response getCommentsData(String userID){
+public class UserPointsTodos extends BaseTest {
+    public static Response getTodoUser(String userID){
         Response response=given()
                 .header("Authorization","Bearer "+baseToken)
                 .request(Method.GET,baseURI+userID);
         return response;
     }
-    @Test
+    //@Test
     public void getUser(){
-        String url="public/v2/comments/74075";
-        Response response=getCommentsData(url);
-        System.out.println("User Data :\n"+response.asString());
+        String url="public/v2/todos/38109";
+        Response response=getTodoUser(url);
+        System.out.println("User Data: \n"+response.asString());
         assertThat(200,equalTo(response.statusCode()));
     }
 
-    public static Response createCommentsUser(String userID,String payload){
+    public static Response createTodosUser(String userID,String payload){
         Response response=given()
                 .header("Authorization","Bearer "+baseToken)
                 .contentType(ContentType.JSON)
@@ -42,22 +42,22 @@ public class UserPointsComments extends BaseTest{
     }
 
     public int createUser(){
-        String url="public/v2/comments";
+        String url="public/v2/todos/";
         Map<String,Object> createData=new HashMap<>();
-        createData.put("post","worker");
-        createData.put("post_id",post_id);
-        createData.put("name","Shyam");
-        createData.put("email","shyam02@gmail.com");
-        createData.put("body","Numquam sint commodi. At est saepe. Assumenda qui voluptas. Dolor earum et");
+        createData.put("user_id",todouser_id);
+        createData.put("title","Depraedor sed defigo caelestis avarus amet");
+        createData.put("due_on","2024-02-02");
+        createData.put("status","completed");
         String payload=new Gson().toJson(createData);
-        Response response=createCommentsUser(url,payload);
-        System.out.println("Created User :\n"+response.asString());
+        Response response=createTodosUser(url,payload);
         JSONObject jsonObject=new JSONObject(response.asString());
         int userID=jsonObject.getInt("id");
+        System.out.println("Created User Data :\n"+response.asString());
+        assertThat(201,equalTo(response.statusCode()));
         return userID;
     }
 
-    public static Response updateCommentsUser(String userID,String payload){
+    public static Response updateTodosData(String userID,String payload){
         Response response=given()
                 .header("Authorization","Bearer "+baseToken)
                 .contentType(ContentType.JSON)
@@ -66,23 +66,23 @@ public class UserPointsComments extends BaseTest{
         return response;
     }
 
+    //@Test
     public int updateUser(){
-    int userID=createUser();
-    String url="public/v2/comments/"+userID;
-    Map<String,Object> updateData=new HashMap<>();
-    updateData.put("post","hustle");
-    updateData.put("post_id",post_id);
-    updateData.put("name","prem");
-    updateData.put("email","premkumar1@gmail.com");
-    updateData.put("body","Eos sit velit. Aliquid animi rerum. Repudiandae sed");
-    String payload=new Gson().toJson(updateData);
-    Response response=updateCommentsUser(url,payload);
-    System.out.println("Updated User Data :\n"+response.asString());
-    assertThat(200,equalTo(response.statusCode()));
-    return userID;
+        int userID=createUser();
+        String url="public/v2/todos/"+userID;
+        Map<String,Object> updateData=new HashMap<>();
+        updateData.put("user_id",todouser_id);
+        updateData.put("title","vulgus condico caries");
+        updateData.put("due_on","2024-02-03");
+        updateData.put("status","pending");
+        String payload=new Gson().toJson(updateData);
+        Response response=updateTodosData(url,payload);
+        System.out.println("Updated User Data :\n"+response.asString());
+        assertThat(200,equalTo(response.statusCode()));
+        return userID;
     }
 
-    public static Response deleteCommentsUser(String userID){
+    public static Response deleteTodosUser(String userID){
         Response response=given()
                 .header("Authorization","Bearer "+baseToken)
                 .request(Method.DELETE,baseURI+userID);
@@ -91,9 +91,9 @@ public class UserPointsComments extends BaseTest{
     @Test
     public void deleteUser(){
         int userID=updateUser();
-        String url="public/v2/comments/"+userID;
-        Response response=deleteCommentsUser(url);
-        System.out.println("Deleted User ID: "+userID);
+        String url="public/v2/todos/"+userID;
+        Response response=deleteTodosUser(url);
+        System.out.println("Deleted User :"+userID);
         assertThat(204,equalTo(response.statusCode()));
     }
 }

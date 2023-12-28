@@ -9,8 +9,9 @@ public class BaseTest {
     public static String baseToken;
     public static String base_id;
     public static String post_id;
+    public static String todouser_id;
     @BeforeMethod
-            public void beforeMethod(){
+    public void beforeMethod(){
 
     baseURI = ApplicationProperties.INSTANCE.getBaseURI();
     baseToken = ApplicationProperties.INSTANCE.getToken();
@@ -21,6 +22,7 @@ public class BaseTest {
 
         base_id="5852902";
         post_id="91166";
+        todouser_id="5859523";
     }
 
 }
