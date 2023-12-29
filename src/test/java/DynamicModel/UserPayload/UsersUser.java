@@ -1,9 +1,13 @@
-package DynamicModel;
+package DynamicModel.UserPayload;
 
-public class Users {
-    private int userID;
+import lombok.Data;
+
+@Data
+public class UsersUser {
+    private int id;
     private String name;
     private String email;
     private String gender;
     private String status;
+
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="TestSuite">
+<suite name="ParallelTestSuite" parallel="classes" thread-count="2">
     <test name="TestCase">
         <classes>
-            <class name="DynamicModel.UserPoints"/>
-            <class name="DynamicModel.UserPointsPosts"/>
-            <class name="DynamicModel.UserPointsComments"/>
-            <class name="DynamicModel.UserPointsTodos"/>
+            <class name="DynamicModel.Cases.UserPoints"/>
+            <class name="DynamicModel.Cases.UserPointsPosts"/>
+            <class name="DynamicModel.Cases.UserPointsComments"/>
+            <class name="DynamicModel.Cases.UserPointsTodos"/>
         </classes>
     </test>
 </suite>

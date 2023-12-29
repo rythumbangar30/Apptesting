@@ -49,4 +49,9 @@ public class ResponseMethods extends BaseTest{
         int userID=jsonObject.getInt("id");
         return userID;
     }
+    public static JSONObject returnJSONResponse(Response response) {
+        String json=response.asString();
+        JSONObject jsonObject=new JSONObject(json);
+        return jsonObject;
+    }
 }
