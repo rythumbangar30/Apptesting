@@ -3,25 +3,20 @@ package DynamicModel.Cases;
 import DynamicModel.BaseTest;
 import DynamicModel.ResponseMethods;
 import DynamicModel.UserPayload.CommentsUser;
+import com.github.javafaker.Faker;
 import com.google.gson.Gson;
-import io.restassured.http.ContentType;
-import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import static DynamicModel.BaseTest.baseToken;
-import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 
 public class UserPointsComments extends BaseTest {
-
+    Faker faker=new Faker();
+    CommentsUser user =new CommentsUser();
 
     public void getUser(int userID){
         String url=userCommentsUrl+userID;
@@ -55,10 +50,10 @@ public class UserPointsComments extends BaseTest {
     Map<String,Object> updateData=new HashMap<>();
 
 
-    updateData.put("post_id",post_id);
-    updateData.put("name","prem");
-    updateData.put("email","premkumar1@gmail.com");
-    updateData.put("body","Eos sit velit. Aliquid animi rerum. Repudiandae sed");
+    updateData.put("post_id",user.getCommentsPost_id());
+    updateData.put("name",user.getCommentsName());
+    updateData.put("email",faker.internet().emailAddress());
+    updateData.put("body",user.getCommentsBody());
 
     String payload=new Gson().toJson(updateData);
 
@@ -78,11 +73,14 @@ public class UserPointsComments extends BaseTest {
     private String dataUser(){
         Map<String,Object> userpayload=new HashMap<>();
 
-        userpayload.put("post","worker");
-        userpayload.put("post_id",post_id);
-        userpayload.put("name","Shyam");
-        userpayload.put("email","shyam02@gmail.com");
-        userpayload.put("body","Numquam sint commodi. At est saepe. Assumenda qui voluptas. Dolor earum et");
+        user.setCommentsPost_id(post_id);
+        user.setCommentsName(faker.name().name());
+        user.setCommentsEmail(faker.internet().emailAddress());
+        user.setCommentsBody(faker.letterify("Numquam sint commodi. At"));
+        userpayload.put("post_id",user.getCommentsPost_id());
+        userpayload.put("name",user.getCommentsName());
+        userpayload.put("email",user.getCommentsEmail());
+        userpayload.put("body",user.getCommentsBody());
 
         String payload=new Gson().toJson(userpayload);
         return payload;

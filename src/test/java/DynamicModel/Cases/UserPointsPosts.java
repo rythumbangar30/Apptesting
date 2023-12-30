@@ -4,6 +4,7 @@ import DynamicModel.BaseTest;
 import DynamicModel.ResponseMethods;
 import DynamicModel.UserPayload.PostsUser;
 import DynamicModel.UserPayload.UsersUser;
+import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
@@ -22,8 +23,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 
 public class UserPointsPosts extends BaseTest {
-
-
+    Faker faker=new Faker();
+    PostsUser user=new PostsUser();
     public void getUser(int userID){
         String url=userPostsUrl+userID;
 
@@ -56,10 +57,9 @@ public class UserPointsPosts extends BaseTest {
 
         Map<String,Object> updateUserData=new HashMap<>();
 
-        updateUserData.put("user_id",base_id);
-        updateUserData.put("title","Id volutabrum velut nulla aeger desipio");
-        updateUserData.put("body","Vis volva capitulus. Vesica delectatio deduco. Catena truculenter aeneus. Voluptas conventus bis.");
-
+        updateUserData.put("user_id",user.getPostsUser_id());
+        updateUserData.put("title",faker.book().title());
+        updateUserData.put("body",user.getPostsBody());
         String payload=new Gson().toJson(updateUserData);
 
         Response response=ResponseMethods.updateUser(url,payload);
@@ -80,11 +80,13 @@ public class UserPointsPosts extends BaseTest {
 
         Map<String,Object> userpayload=new HashMap<>();
 
-        userpayload.put("user","shyam");
-        userpayload.put("user_id",base_id);
-        userpayload.put("title","Cunae angelus tepidus vix cupio cubitum");
-        userpayload.put("body","Eveniet ago eos. Exercitationem studio perspiciatis. Varietas autem sophismata. Accusantium ultio soleo. Sumo talus audeo. Timidus credo vinculum");
-
+        user.setPostsUser_id(base_id);
+        user.setPostsTitle(faker.job().title());
+        user.setPostsBody(faker.internet().macAddress());
+       // userpayload.put("user","shyam");
+        userpayload.put("user_id",user.getPostsUser_id());
+        userpayload.put("title",user.getPostsTitle());
+        userpayload.put("body",user.getPostsBody());
         String payload=new Gson().toJson(userpayload);
         return payload;
     }

@@ -2,6 +2,7 @@ package DynamicModel.Cases;
 import DynamicModel.BaseTest;
 import DynamicModel.ResponseMethods;
 import DynamicModel.UserPayload.UsersUser;
+import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import io.restassured.response.Response;
 import org.json.JSONObject;
@@ -16,6 +17,8 @@ import static org.hamcrest.Matchers.hasProperty;
 
 public class UserPoints extends BaseTest {
 
+    Faker faker=new Faker();
+    UsersUser user=new UsersUser();
 
     public void getUser(int userID){
         String url=userClassUrl+userID;
@@ -45,9 +48,9 @@ public class UserPoints extends BaseTest {
 
         Map<String,Object> userUpdatedData=new HashMap<>();
 
-        userUpdatedData.put("name","shri");
-        userUpdatedData.put("email","shri22@gmail.com");
-        userUpdatedData.put("gender","male");
+        userUpdatedData.put("name",user.getUsersName());
+        userUpdatedData.put("email",user.getUsersEmail());
+        userUpdatedData.put("gender",user.getUsersGender());
         userUpdatedData.put("status","inactive");
 
         String updatepayload=new Gson().toJson(userUpdatedData);
@@ -62,7 +65,7 @@ public class UserPoints extends BaseTest {
 
         UsersUser user=new Gson().fromJson(String.valueOf(jsonObject),UsersUser.class);
 
-        assertThat(user,hasProperty("id",equalTo(userID)));
+        assertThat(user,hasProperty("status",equalTo("inactive")));
     }
 
 
@@ -70,10 +73,14 @@ public class UserPoints extends BaseTest {
     private String dataUser(){
         Map<String,Object> userpayload=new HashMap<>();
 
-        userpayload.put("name","sarkar");
-        userpayload.put("email","sarkar.77@gmail.com");
-        userpayload.put("gender", "male");
-        userpayload.put("status", "active");
+          user.setUsersName(faker.name().username());
+          user.setUsersEmail(faker.internet().emailAddress());
+          user.setUsersGender("male");
+          user.setUsersStatus("active");
+        userpayload.put("name",user.getUsersName());
+        userpayload.put("email",user.getUsersEmail());
+        userpayload.put("gender", user.getUsersGender());
+        userpayload.put("status", user.getUsersStatus());
 
         String payload=new Gson().toJson(userpayload);
         return payload;
