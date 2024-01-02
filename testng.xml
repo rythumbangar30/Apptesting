@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="ParallelTestSuite" parallel="classes" thread-count="2">
-    <test name="TestCase">
+<suite name="ParallelTestSuite" >
+    <test name="TestCase" parallel="classes" thread-count="16">
         <classes>
             <class name="DynamicModel.Cases.UserPoints"/>
             <class name="DynamicModel.Cases.UserPointsPosts"/>

@@ -21,6 +21,15 @@ public enum ApplicationProperties {
     public String getBaseURI() {
         return properties.getProperty("service.url");
     }
+//    public String getBasePostsURI() {
+//        return properties.getProperty("service.urlPosts");
+//    }
+//    public String getBaseCommentsURI() {
+//        return properties.getProperty("service.urlComments");
+//    }
+//    public String getBaseTodosURI() {
+//        return properties.getProperty("service.urlTodos");
+//    }
 
     public String getToken() {
         return properties.getProperty("service.token");
